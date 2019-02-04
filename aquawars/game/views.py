@@ -16,6 +16,51 @@ def index(request):
         return render(request, 'index.html', context=ctx)
 
 
+def construction(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts/login/')
+    else:
+        ctx = Contexte(request)
+
+        return render(request, 'construction.html', context=ctx)
+
+
+def recherche(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts/login/')
+    else:
+        ctx = Contexte(request)
+
+        return render(request, 'recherche.html', context=ctx)
+
+
+def navire(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts/login/')
+    else:
+        ctx = Contexte(request)
+
+        return render(request, 'navire.html', context=ctx)
+
+
+def flotte(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts/login/')
+    else:
+        ctx = Contexte(request)
+
+        return render(request, 'flotte.html', context=ctx)
+
+
+def commerce(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts/login/')
+    else:
+        ctx = Contexte(request)
+
+        return render(request, 'commerce.html', context=ctx)
+
+
 def new_account(request):
     existe_deja = ""
 
