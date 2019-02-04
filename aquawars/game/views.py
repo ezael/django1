@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from game.forms import *
-from game.models import Classe, Player, Serveur
+from .forms import *
+from .models import *
+from .contexte import *
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -10,7 +11,8 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('accounts/login/')
     else:
-        ctx = {}
+        ctx = Contexte(request)
+
         return render(request, 'index.html', context=ctx)
 
 
@@ -43,6 +45,9 @@ def new_account(request):
                 serveur=Serveur.objects.get(id=new_serveur)
             )
             new_player.save()
+
+            #on construit sa station principale
+
 
             return redirect('/accounts/login/?new='+str(new_user.id))
 

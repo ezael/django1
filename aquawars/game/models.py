@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.base_user import AbstractBaseUser
 
 # Create your models here.
 class Classe(models.Model):
