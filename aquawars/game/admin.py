@@ -102,6 +102,20 @@ class ClasseAdmin(admin.ModelAdmin):
     )
 
 
+class StationConnueAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'joueur',
+        'station'
+    )
+
+    list_display_links = (
+        'id',
+        'joueur',
+        'station'
+    )
+
+
 admin.site.register(Classe, ClasseAdmin)
 admin.site.register(Serveur)
 admin.site.register(Station, StationAdmin)
@@ -109,3 +123,5 @@ admin.site.register(TypeBatiment, TypeBatimentAdmin)
 admin.site.register(TypeNavire, TypeNavireAdmin)
 admin.site.register(TypeRecherche, TypeRechercheAdmin)
 admin.site.register(Player, PlayerAdmin)
+admin.site.register(StationConnue, StationConnueAdmin)
+admin.site.register(Flotte)

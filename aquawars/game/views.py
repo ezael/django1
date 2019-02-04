@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from game.forms import *
-from game.models import Classe
+from game.models import Classe, Player, Serveur
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -10,9 +10,8 @@ def index(request):
     if not request.user.is_authenticated:
         return redirect('accounts/login/')
     else:
-        contexte = {
-        }
-        return render(request, 'index.html', context=contexte)
+        ctx = {}
+        return render(request, 'index.html', context=ctx)
 
 
 def new_account(request):
@@ -21,23 +20,35 @@ def new_account(request):
     if request.method == 'GET':
         form = NewPlayerForm()
     else:
-        form = NewPlayerForm(request.POST)
+        data = request.POST
+        new_identifiant = data['identifiant']
+        new_password = data['password']
+        new_classe = data['classe']
+        new_serveur = data['serveur']
 
-        new_identifiant = request.POST['identifiant']
-        new_password = request.POST['password']
-        new_classe = request.POST['classe']
+        form = NewPlayerForm(data)
 
-        u, created = User.objects.get_or_create(username=new_identifiant, password=new_password)
-        if created:
-            existe_deja = "user created"
-        else:
+        # on test le nickname pour voir si le joueur existe deja en BD
+        if User.objects.filter(username=new_identifiant).exists():
             existe_deja = "This nickname already exist !"
+        else:
+            # on crée le nouveau joueur
+            new_user = User.objects.create_user(new_identifiant, "", new_password)
+            existe_deja = "user created id "+str(new_user.id)
 
-    classes = Classe.objects.all()
+            # on créé l'enregistrement dans la table Players
+            new_player = Player(
+                joueur=new_user,
+                classe=Classe.objects.get(id=new_classe),
+                serveur=Serveur.objects.get(id=new_serveur)
+            )
+            new_player.save()
 
-    contexte = {
+            return redirect('/accounts/login/?new='+str(new_user.id))
+
+    ctx = {
         'form': form,
         'existe_deja': existe_deja
     }
 
-    return render(request, 'new_account.html', context=contexte)
+    return render(request, 'new_account.html', context=ctx)

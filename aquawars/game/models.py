@@ -5,12 +5,12 @@ from django.contrib.auth.base_user import AbstractBaseUser
 # Create your models here.
 class Classe(models.Model):
     nom = models.CharField(max_length=32)
-    navigation = models.IntegerField(default=0)
-    commerce = models.IntegerField(default=0)
-    recherche = models.IntegerField(default=0)
-    construction = models.IntegerField(default=0)
-    aquaculture = models.IntegerField(default=0)
-    combat = models.IntegerField(default=0)
+    navigation = models.IntegerField(default=100)
+    commerce = models.IntegerField(default=100)
+    recherche = models.IntegerField(default=100)
+    construction = models.IntegerField(default=100)
+    aquaculture = models.IntegerField(default=100)
+    combat = models.IntegerField(default=100)
 
     def __str__(self):
         return self.nom
@@ -73,6 +73,8 @@ class Station(models.Model):
     navires_max = models.IntegerField(default=1)
     debris_actu = models.IntegerField(default=0)
     debris_max = models.IntegerField(default=1)
+    pv = models.IntegerField(default=10000)
+    pv_max = models.IntegerField(default=10000)
 
     def __str__(self):
         return self.nom
@@ -84,7 +86,8 @@ class TypeBatiment(models.Model):
     image = models.CharField(max_length=32, blank=True)
     description = models.TextField(blank=True)
     rech_mandatory = models.CharField(max_length=256, blank=True)
-    cout_res0 = models.IntegerField(default=0)
+    bat_mandatory = models.CharField(max_length=256, blank=True)
+    cout_res0 = models.IntegerField(default=1000)
     cout_res1 = models.IntegerField(default=0)
     cout_res2 = models.IntegerField(default=0)
     cout_res3 = models.IntegerField(default=0)
@@ -92,6 +95,22 @@ class TypeBatiment(models.Model):
     cout_res5 = models.IntegerField(default=0)
     cout_res6 = models.IntegerField(default=0)
     cout_res7 = models.IntegerField(default=0)
+    cron_res0 = models.IntegerField(default=0)
+    cron_res1 = models.IntegerField(default=0)
+    cron_res2 = models.IntegerField(default=0)
+    cron_res3 = models.IntegerField(default=0)
+    cron_res4 = models.IntegerField(default=0)
+    cron_res5 = models.IntegerField(default=0)
+    cron_res6 = models.IntegerField(default=0)
+    cron_res7 = models.IntegerField(default=0)
+    cap_res0 = models.IntegerField(default=0)
+    cap_res1 = models.IntegerField(default=0)
+    cap_res2 = models.IntegerField(default=0)
+    cap_res3 = models.IntegerField(default=0)
+    cap_res4 = models.IntegerField(default=0)
+    cap_res5 = models.IntegerField(default=0)
+    cap_res6 = models.IntegerField(default=0)
+    cap_res7 = models.IntegerField(default=0)
     timer = models.IntegerField(default=100)
     att_light = models.IntegerField(default=0)
     att_medium = models.IntegerField(default=0)
@@ -165,4 +184,30 @@ class Player(models.Model):
     def get_serveur(self):
         return self.serveur.nom
 
+
+class StationConnue(models.Model):
+    joueur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    station = models.ForeignKey(Station, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.station.nom+" ( "+self.joueur.username+" )"
+
+
+class Flotte(models.Model):
+    nom = models.CharField(max_length=32)
+    ordre = models.CharField(max_length=8)
+    coord_x = models.IntegerField(blank=True)
+    coord_y = models.IntegerField(blank=True)
+    coord_z = models.IntegerField(blank=True)
+    station = models.IntegerField(blank=True)
+    destination = models.IntegerField(blank=True)
+    trajet = models.IntegerField(blank=True)
+    trajet_max = models.IntegerField(blank=True)
+    soute = models.IntegerField(blank=True)
+    soute_max = models.IntegerField(blank=True)
+    soute_detail = models.CharField(max_length=256, blank=True)
+    scanner = models.IntegerField(blank=True)
+
+    def __str__(self):
+        return self.nom
 
