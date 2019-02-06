@@ -12,6 +12,7 @@ def index(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "recap"
 
         return render(request, 'index.html', context=ctx)
 
@@ -21,6 +22,7 @@ def construction(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "construction"
 
         return render(request, 'construction.html', context=ctx)
 
@@ -30,6 +32,7 @@ def recherche(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "recherche"
 
         return render(request, 'recherche.html', context=ctx)
 
@@ -39,6 +42,7 @@ def navire(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "navire"
 
         return render(request, 'navire.html', context=ctx)
 
@@ -48,6 +52,7 @@ def flotte(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "flotte"
 
         return render(request, 'flotte.html', context=ctx)
 
@@ -57,6 +62,7 @@ def commerce(request):
         return redirect('accounts/login/')
     else:
         ctx = Contexte(request)
+        ctx['page'] = "commerce"
 
         return render(request, 'commerce.html', context=ctx)
 
@@ -68,6 +74,7 @@ def new_account(request):
         form = NewPlayerForm()
     else:
         data = request.POST
+
         new_identifiant = data['identifiant']
         new_password = data['password']
         new_classe = data['classe']

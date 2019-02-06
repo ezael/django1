@@ -1,10 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-{{ user.id }} {{ user.username }} {{ serveur.nom }} {{ serveur.id }} <br>
-station principale {{ station_principale.nom }}<br>
-station actuelle {{ station_actuelle.nom }}<br>
-page {{ page }}<br>
+{% load i18n %}
+{% trans 'page' %} xxx {{ page }}<br>
 <br>
+
 <a href="/accounts/logout/">Logout</a>
 {% endblock %}

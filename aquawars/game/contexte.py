@@ -1,11 +1,9 @@
 from .models import *
+from .lang.fr import fr
+from .lang.en import en
 
 def Contexte(request):
-    # enregistrement de la page actuelle
-    if 'page' in request.GET:
-        page = request.GET['page']
-    else:
-        page = ""
+    global fr, en
 
     player = Player.objects.get(joueur=request.user.id)
     serveur = Serveur.objects.get(id=player.serveur.id)
@@ -26,10 +24,17 @@ def Contexte(request):
     else:
         station_actuelle = station_principale
 
+    # on met la langue en fonction de celle du serveur
+    if serveur.lang == "fr":
+        trad = fr
+    elif serveur.lang == "en":
+        trad = en
+
     ctx = {
+        "lang": serveur.lang,
+        "trad": trad,
         "player": player,
         "serveur": serveur,
-        "page": page,
         "station_principale": station_principale,
         "station_actuelle": station_actuelle
     }

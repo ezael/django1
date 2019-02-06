@@ -1,10 +1,61 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
-  {% block title %}<title>Local Library</title>{% endblock %}
+  {% block title %}<title>{{ trad.titre }}</title>{% endblock %}
 </head>
 <body>
-  {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+  <div>{{ langue.toto }}</div>
+  <div>
+    {{ user.username }} |
+    {{ trad.univers }}: {{ serveur.nom }} |
+    {{ trad.station_actuelle }}: {{ station_actuelle.nom }} |
+    {{ trad.station_principale }}: {{ station_principale.nom }}
+  </div>
+  <div>
+    <span>
+      {{ trad.res0 }}: {{ station_actuelle.res0 }} / {{ station_actuelle.cap_res0 }}
+      ( + {{ station_actuelle.cron_res0 }} )
+    </span> |
+    <span>
+      {{ trad.res1 }}: {{ station_actuelle.res1 }} / {{ station_actuelle.cap_res1 }}
+      ( + {{ station_actuelle.cron_res1 }} )
+    </span> |
+    <span>
+      {{ trad.res2 }}: {{ station_actuelle.res2 }} / {{ station_actuelle.cap_res2 }}
+      ( + {{ station_actuelle.cron_res2 }} )
+    </span> |
+    <span>
+      {{ trad.res3 }}: {{ station_actuelle.res3 }} / {{ station_actuelle.cap_res3 }}
+      ( + {{ station_actuelle.cron_res3 }} )
+    </span> |
+    <span>
+      {{ trad.res4 }}: {{ station_actuelle.res4 }} / {{ station_actuelle.cap_res4 }}
+      ( + {{ station_actuelle.cron_res4 }} )
+    </span> |
+    <span>
+      {{ trad.res5 }}: {{ station_actuelle.res5 }} / {{ station_actuelle.cap_res5 }}
+      ( + {{ station_actuelle.cron_res5 }} )
+    </span> |
+    <span>
+      {{ trad.res6 }}: {{ station_actuelle.res6 }} / {{ station_actuelle.cap_res6 }}
+      ( + {{ station_actuelle.cron_res6 }} )
+    </span> |
+    <span>
+      {{ trad.res7 }}: {{ station_actuelle.res7 }} / {{ station_actuelle.cap_res7 }}
+      ( + {{ station_actuelle.cron_res7 }} )
+    </span>
+  </div>
+  {% block sidebar %}
+    <ul>
+      <li><a href="/">{% if page == 'recap' %}>>> {% endif %}recap</a></li>
+      <li><a href="/construction">{% if page == 'construction' %}>>> {% endif %}construction</a></li>
+      <li><a href="/recherche/">{% if page == 'recherche' %}>>> {% endif %}recherche</a></li>
+      <li><a href="/navire/">{% if page == 'navire' %}>>> {% endif %}navire</a></li>
+      <li><a href="/flotte/">{% if page == 'flotte' %}>>> {% endif %}flotte</a></li>
+      <li><a href="/commerce/">{% if page == 'commerce' %}>>> {% endif %}commerce</a></li>
+    </ul>
+  {% endblock %}
   {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>
 </html>
