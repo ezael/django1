@@ -65,13 +65,13 @@ class Station(models.Model):
     recherches_actu = models.IntegerField(default=0)
     recherches_max = models.IntegerField(default=1)
     flottes_actu = models.IntegerField(default=0)
-    flottes_max = models.IntegerField(default=1)
-    constructions_actu = models.IntegerField(default=0)
-    constructions_max = models.IntegerField(default=1)
+    flottes_max = models.IntegerField(default=3)
+    batiments_actu = models.IntegerField(default=0)
+    batiments_max = models.IntegerField(default=20)
     navires_actu = models.IntegerField(default=0)
-    navires_max = models.IntegerField(default=1)
+    navires_max = models.IntegerField(default=10)
     debris_actu = models.IntegerField(default=0)
-    debris_max = models.IntegerField(default=1)
+    debris_max = models.IntegerField(default=10000)
     pv = models.IntegerField(default=10000)
     pv_max = models.IntegerField(default=10000)
 
@@ -159,7 +159,7 @@ class TypeNavire(models.Model):
 
 class TypeRecherche(models.Model):
     nom_admin = models.CharField(max_length=32)
-    nom_web = models.CharField(max_length=256)
+    nom_web = models.CharField(max_length=256, blank=True)
     image = models.CharField(max_length=32, blank=True)
     description = models.TextField(blank=True)
     timer = models.IntegerField(default=100)
@@ -198,10 +198,9 @@ class Flotte(models.Model):
     coord_x = models.IntegerField(blank=True)
     coord_y = models.IntegerField(blank=True)
     coord_z = models.IntegerField(blank=True)
-    station = models.IntegerField(blank=True)
-    destination = models.IntegerField(blank=True)
-    trajet = models.IntegerField(blank=True)
-    trajet_max = models.IntegerField(blank=True)
+    station = models.ForeignKey(Station, on_delete=models.CASCADE)
+    destination = models.ForeignKey(Station, on_delete=models.CASCADE, related_name="destination_station")
+    timer = models.IntegerField(default=0)
     soute = models.IntegerField(blank=True)
     soute_max = models.IntegerField(blank=True)
     soute_detail = models.CharField(max_length=256, blank=True)
@@ -209,4 +208,20 @@ class Flotte(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+class Batiment(models.Model):
+    station = models.ForeignKey(Station, on_delete=models.CASCADE)
+    bat = models.ForeignKey(TypeBatiment, on_delete=models.CASCADE)
+    niveau  = models.IntegerField(default=1)
+    timer = models.IntegerField(default=0)
+    att_light = models.IntegerField(default=0)
+    att_medium = models.IntegerField(default=0)
+    att_heavy = models.IntegerField(default=0)
+    def_light = models.IntegerField(default=0)
+    def_medium = models.IntegerField(default=0)
+    def_heavy = models.IntegerField(default=0)
+    pv = models.IntegerField(default=100)
+    pv_max = models.IntegerField(default=100)
+
 

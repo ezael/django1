@@ -9,6 +9,7 @@ class Command(BaseCommand):
         while True:
             stations = Station.objects.all()
             for station in stations:
+                # gain de ressources
                 station.res0 = station.res0 + station.cron_res0
                 station.res1 = station.res1 + station.cron_res1
                 station.res2 = station.res2 + station.cron_res2
@@ -20,27 +21,38 @@ class Command(BaseCommand):
 
                 if station.res0 > station.cap_res0:
                     station.res0 = station.cap_res0
-
                 if station.res1 > station.cap_res1:
                     station.res1 = station.cap_res1
-
                 if station.res2 > station.cap_res2:
                     station.res2 = station.cap_res2
-
                 if station.res3 > station.cap_res3:
                     station.res3 = station.cap_res3
-
                 if station.res4 > station.cap_res4:
                     station.res4 = station.cap_res4
-
                 if station.res5 > station.cap_res5:
                     station.res5 = station.cap_res5
-
                 if station.res6 > station.cap_res6:
                     station.res6 = station.cap_res6
-
                 if station.res7 > station.cap_res7:
                     station.res7 = station.cap_res7
+
+                # on verifie si les res sont > zero
+                if station.res0 < 0:
+                    station.res0 = 0
+                if station.res1 < 0:
+                    station.res1 = 0
+                if station.res2 < 0:
+                    station.res2 = 0
+                if station.res3 < 0:
+                    station.res3 = 0
+                if station.res4 < 0:
+                    station.res4 = 0
+                if station.res5 < 0:
+                    station.res5 = 0
+                if station.res6 < 0:
+                    station.res6 = 0
+                if station.res7 < 0:
+                    station.res7 = 0
 
                 station.save()
 

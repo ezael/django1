@@ -1,4 +1,5 @@
 from .models import *
+from .lib import *
 from .lang.fr import fr
 from .lang.en import en
 
@@ -24,6 +25,14 @@ def Contexte(request):
     else:
         station_actuelle = station_principale
 
+    # on cherche les batiments de la station
+    batiments = Batiment.objects.filter(
+        station_id=station_actuelle
+    )
+
+    for item in batiments:
+        item.nom = get_trad(serveur.lang, item.bat.nom_web)
+
     # on met la langue en fonction de celle du serveur
     if serveur.lang == "fr":
         trad = fr
@@ -36,7 +45,10 @@ def Contexte(request):
         "player": player,
         "serveur": serveur,
         "station_principale": station_principale,
-        "station_actuelle": station_actuelle
+        "station_actuelle": station_actuelle,
+        "batiments": batiments,
+        "bat_slot_dispo": station_actuelle.batiments_max - station_actuelle.batiments_actu,
+        "bat_slot_max": station_actuelle.batiments_max,
     }
 
     return ctx

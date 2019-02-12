@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from .contexte import *
+from .lib import *
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -23,6 +24,56 @@ def construction(request):
     else:
         ctx = Contexte(request)
         ctx['page'] = "construction"
+
+        # on regarde si on a lance une construction
+        ctx['construction_up'] = ""
+
+        if 'id' in request.GET:
+            ctx['construction_up'] = new_bat(request.GET['id'], ctx['station_actuelle'].id)
+
+            return redirect('/construction')
+
+        bd = []
+
+        station = ctx['station_actuelle']
+
+        if ctx['bat_slot_dispo'] > 0:
+            bat_dispos = TypeBatiment.objects.all()
+
+            for bat_dispo in bat_dispos:
+                bat_dispo.nom_web = get_trad(ctx['lang'], bat_dispo.nom_web)
+                go = 1
+
+                # on verifie mandatory rech
+                if bat_dispo.rech_mandatory != "":
+                    pass
+
+                # on verifie mandatory bat
+                if bat_dispo.bat_mandatory != "":
+                    pass
+
+                # on verifie les ressources
+                if bat_dispo.cout_res0 > station.res0:
+                    go = 0
+                if bat_dispo.cout_res1 > station.res1:
+                    go = 0
+                if bat_dispo.cout_res2 > station.res2:
+                    go = 0
+                if bat_dispo.cout_res3 > station.res3:
+                    go = 0
+                if bat_dispo.cout_res4 > station.res4:
+                    go = 0
+                if bat_dispo.cout_res5 > station.res5:
+                    go = 0
+                if bat_dispo.cout_res6 > station.res6:
+                    go = 0
+                if bat_dispo.cout_res7 > station.res7:
+                    go = 0
+
+                if go == 1:
+                    bd.append(bat_dispo)
+
+        ctx['bat_dispos'] = bd
 
         return render(request, 'construction.html', context=ctx)
 

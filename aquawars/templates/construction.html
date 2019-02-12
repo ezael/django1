@@ -2,5 +2,32 @@
 
 {% block content %}
 <div>construction</div>
+<div>bat slot dispo: {{ bat_slot_dispo }} / {{ bat_slot_max }}</div>
+<ul>
+{% for item in bat_dispos %}
+    <div>
+        <a href="?id={{ item.id }}">{{ item.nom_web }}</a>
+    </div>
+{% endfor %}
+</ul>
+
+<div>batiments construits:</div>
+<ul>
+    {% for item in batiments %}
+        {% if item.timer == 0 %}
+            <li>id: {{ item.id }} | niveau: {{ item.niveau }} | timer: {{ item.timer }} | nom: {{ item.nom }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<div>batiments en cours de construction:</div>
+<ul>
+    {% for item in batiments %}
+        {% if item.timer > 0 %}
+            <li>id: {{ item.id }} | niveau: {{ item.niveau }} | timer: {{ item.timer }} | nom: {{ item.nom }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
 <a href="/accounts/logout/">Logout</a>
 {% endblock %}
