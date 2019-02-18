@@ -1,8 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<div>construction</div>
-<div>bat slot dispo: {{ bat_slot_dispo }} / {{ bat_slot_max }}</div>
+<div>slots de batiments encore dispo sur la station: {{ bat_slots }}</div>
 <ul>
 {% for item in bat_dispos %}
     <div>
@@ -10,8 +9,11 @@
     </div>
 {% endfor %}
 </ul>
+{% if bat_dispo == 0 %}
+    <div>Vous devez attendre que la construction de vos batiments soit finis pour en construire d'autres</div>
+{% endif %}
 
-<div>batiments construits:</div>
+<div>batiments déjà construits:</div>
 <ul>
     {% for item in batiments %}
         {% if item.timer == 0 %}
@@ -20,7 +22,7 @@
     {% endfor %}
 </ul>
 
-<div>batiments en cours de construction:</div>
+<div>batiments en cours de construction: {{ station_actuelle.batiments_actu }} / {{ station_actuelle.batiments_max}}</div>
 <ul>
     {% for item in batiments %}
         {% if item.timer > 0 %}

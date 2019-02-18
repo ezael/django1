@@ -1,9 +1,22 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-{% load i18n %}
-{% trans 'page' %} xxx {{ page }}<br>
-<br>
+<div>Station actuelle : {{ station_actuelle.nom }}</div>
+<div>
+    Station principale:
+    {% if station_actuelle.principale == 1 %}
+        Oui
+     {% else %}
+        Non
+    {% endif %}
+</div>
+<div>Coordonnées: X {{ station_actuelle.coord_x }} | Y {{ station_actuelle.coord_y }} | Z {{ station_actuelle.coord_z }}</div>
+<div>Recherches en cours: {{ station_actuelle.recherches_actu }} / {{ station_actuelle.recherches_max }}</div>
+<div>Batiments en cours de construction: {{ station_actuelle.batiments_actu }} / {{ station_actuelle.batiments_max }}</div>
+<div>Navires en cours de construction: {{ station_actuelle.navires_actu }} / {{ station_actuelle.navires_max }}</div>
+<div>Flottes construites: {{ station_actuelle.flottes_actu }} / {{ station_actuelle.flottes_max }}</div>
+<div>Espace restant dans la station: {{ station_actuelle.batiments_slots }} / 250</div>
 
+<br>
 <a href="/accounts/logout/">Logout</a>
 {% endblock %}

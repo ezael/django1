@@ -37,7 +37,7 @@ def construction(request):
 
         station = ctx['station_actuelle']
 
-        if ctx['bat_slot_dispo'] > 0:
+        if ctx['bat_slots'] > 0 and ctx['bat_dispo'] > 0:
             bat_dispos = TypeBatiment.objects.all()
 
             for bat_dispo in bat_dispos:
@@ -149,8 +149,7 @@ def new_account(request):
             )
             new_player.save()
 
-            #on construit sa station principale
-
+            # on construit sa station principale
 
             return redirect('/accounts/login/?new='+str(new_user.id))
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 # Create your models here.
 class Classe(models.Model):
     nom = models.CharField(max_length=32)
@@ -67,7 +68,8 @@ class Station(models.Model):
     flottes_actu = models.IntegerField(default=0)
     flottes_max = models.IntegerField(default=3)
     batiments_actu = models.IntegerField(default=0)
-    batiments_max = models.IntegerField(default=20)
+    batiments_max = models.IntegerField(default=3)
+    batiments_slots = models.IntegerField(default=250)
     navires_actu = models.IntegerField(default=0)
     navires_max = models.IntegerField(default=10)
     debris_actu = models.IntegerField(default=0)

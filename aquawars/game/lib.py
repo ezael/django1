@@ -1,5 +1,6 @@
 from .models import *
 
+
 def get_trad(lang, txt):
     t = txt.split("#")
 
@@ -29,10 +30,12 @@ def new_bat(bat_id, station_id):
         def_heavy=type_batiment.def_heavy,
         pv=type_batiment.pv,
         pv_max=type_batiment.pv
-    );
+    )
 
     new_bat.save()
 
+    station.batiments_slots -= 1
+    station.batiments_actu += 1
+    station.save()
+
     return "new construct up, const_id:"+str(bat_id)+" | station_id:"+str(station_id)
-
-

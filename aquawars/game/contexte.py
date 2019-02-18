@@ -3,6 +3,7 @@ from .lib import *
 from .lang.fr import fr
 from .lang.en import en
 
+
 def Contexte(request):
     global fr, en
 
@@ -27,7 +28,7 @@ def Contexte(request):
 
     # on cherche les batiments de la station
     batiments = Batiment.objects.filter(
-        station_id=station_actuelle
+        station=station_actuelle
     )
 
     for item in batiments:
@@ -47,8 +48,9 @@ def Contexte(request):
         "station_principale": station_principale,
         "station_actuelle": station_actuelle,
         "batiments": batiments,
-        "bat_slot_dispo": station_actuelle.batiments_max - station_actuelle.batiments_actu,
-        "bat_slot_max": station_actuelle.batiments_max,
+        "bat_slots": station_actuelle.batiments_slots,
+        "bat_max": station_actuelle.batiments_max,
+        "bat_dispo": station_actuelle.batiments_max-station_actuelle.batiments_actu
     }
 
     return ctx

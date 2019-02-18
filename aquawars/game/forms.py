@@ -1,5 +1,5 @@
 from django.forms import Form, CharField, PasswordInput, ModelChoiceField
-from game.models import Classe, Serveur
+from .models import Classe, Serveur
 
 class NewPlayerForm(Form):
     e = Classe.objects.all()
